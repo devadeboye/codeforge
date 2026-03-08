@@ -2,8 +2,6 @@
 
 A real-time collaborative code editor with a cyberpunk/hacker aesthetic, sandboxed code execution, and a microservices backend — built to showcase engineering excellence.
 
-![CodeForge UI Mockup](offline-assets/ui-mockup.jpg)
-
 ---
 
 ## Overview
