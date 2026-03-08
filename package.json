@@ -5,9 +5,13 @@
     "dev": "pnpm --parallel -r run dev",
     "build": "pnpm --parallel -r run build",
     "test": "pnpm --parallel -r run test",
-    "lint": "pnpm --parallel -r run lint"
+    "lint": "pnpm --parallel -r run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,css}\" --ignore-path .prettierignore"
   },
   "devDependencies": {
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.1",
     "typescript": "^5.0.0"
   }
 }
