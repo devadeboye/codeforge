@@ -36,7 +36,7 @@ export function MainLayout() {
           {/* Main content */}
           <Panel id="main-content">
             <Group orientation="vertical" className="h-full">
-              <Panel id="editor" defaultSize={70} minSize={30}>
+              <Panel id="editor" defaultSize={'70%'} minSize={'30%'}>
                 <EditorArea />
               </Panel>
 
@@ -45,9 +45,9 @@ export function MainLayout() {
                   <Separator className="h-0.75 cursor-row-resize bg-border-subtle hover:bg-accent-purple transition-colors" />
                   <Panel
                     id="terminal"
-                    defaultSize={30}
-                    minSize={15}
-                    maxSize={60}
+                    defaultSize={'30%'}
+                    minSize={'15%'}
+                    maxSize={'60%'}
                   >
                     <TerminalPanel />
                   </Panel>
