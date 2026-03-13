@@ -1,68 +1,115 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@theme {
+  /* --- Backgrounds --- */
+  --color-bg-primary: #282a36;
+  --color-bg-secondary: #21222c;
+  --color-bg-tertiary: #343746;
+  --color-bg-elevated: #44475a;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+  /* --- Foreground --- */
+  --color-fg-primary: #f8f8f2;
+  --color-fg-secondary: #bfc7d5;
+  --color-fg-muted: #6272a4;
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  /* --- Dracula Accents --- */
+  --color-accent-pink: #ff79c6;
+  --color-accent-purple: #bd93f9;
+  --color-accent-cyan: #8be9fd;
+  --color-accent-green: #50fa7b;
+  --color-accent-orange: #ffb86c;
+  --color-accent-red: #ff5555;
+  --color-accent-yellow: #f1fa8c;
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+  /* --- Borders --- */
+  --color-border-subtle: rgba(98, 114, 164, 0.3);
+  --color-border-active: rgba(189, 147, 249, 0.5);
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  /* --- Fonts --- */
+  --font-family-code: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  --font-family-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* --- Layout --- */
+  --spacing-header: 48px;
+  --spacing-sidebar-icon: 48px;
+
+  /* --- Box Shadows (neon glows) --- */
+  --shadow-glow-pink: 0 0 8px rgba(255, 121, 198, 0.6), 0 0 20px rgba(255, 121, 198, 0.3);
+  --shadow-glow-purple: 0 0 8px rgba(189, 147, 249, 0.6), 0 0 20px rgba(189, 147, 249, 0.3);
+  --shadow-glow-cyan: 0 0 8px rgba(139, 233, 253, 0.6), 0 0 20px rgba(139, 233, 253, 0.3);
+  --shadow-glow-green: 0 0 8px rgba(80, 250, 123, 0.6), 0 0 20px rgba(80, 250, 123, 0.3);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+
+@layer base {
+  /* IDE-specific: full-screen layout, no scroll on root elements */
+  html,
+  body,
+  #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
   }
-  a:hover {
-    color: #747bff;
+
+  /* Custom fonts + colours that Preflight doesn't set */
+  body {
+    font-family: var(--font-family-ui);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-fg-primary);
+    background-color: var(--color-bg-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-bg-elevated); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-fg-muted); }
+
+::selection {
+  background: rgba(189, 147, 249, 0.3);
+  color: var(--color-fg-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-purple);
+  outline-offset: 2px;
+}
+
+@utility glass-panel {
+  background: rgba(33, 34, 44, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(248, 248, 242, 0.08);
+}
+
+/* Fira Code + ligatures shorthand */
+@utility font-code {
+  font-family: var(--font-family-code);
+  font-feature-settings: 'liga' 1, 'calt' 1;
+}
+
+/* ============================================================
+   react-resizable-panels Separator
+   Requires attribute selectors — impossible with Tailwind classes
+   ============================================================ */
+[data-separator] {
+  background-color: var(--color-border-subtle);
+  transition: background-color 150ms ease;
+}
+[data-separator]:hover,
+[data-separator][data-active] {
+  background-color: var(--color-accent-purple);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
 }
