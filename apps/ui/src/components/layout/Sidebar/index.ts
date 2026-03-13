@@ -1,1 +1,2 @@
-export * from './Sidebar';
+export * from './IconRail';
+export * from './ExplorerPanel';

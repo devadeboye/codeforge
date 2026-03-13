@@ -1,7 +1,7 @@
 import { Group, Panel, Separator } from 'react-resizable-panels';
 import { useUIStore } from '../../../store/useUIStore';
 import { Header } from '../Header';
-import { Sidebar } from '../Sidebar';
+import { IconRail, ExplorerPanel } from '../Sidebar';
 import { EditorArea } from '../EditorArea';
 import { TerminalPanel } from '../TerminalPanel';
 
@@ -12,19 +12,28 @@ export function MainLayout() {
     <div className="flex flex-col h-screen w-screen overflow-hidden">
       <Header />
 
-      {/* IDE body — takes remaining height */}
-      <div className="flex-1 overflow-hidden">
-        <Group orientation="horizontal" className="h-full">
+      <div className="flex flex-1 overflow-hidden">
+        {/* Fixed Icon Rail (48px) */}
+        <IconRail />
+
+        {/* Resizable area */}
+        <Group orientation="horizontal" className="flex-1">
           {isSidebarOpen && (
             <>
-              <Panel id="sidebar" defaultSize={48} minSize={35} maxSize={48}>
-                <Sidebar />
+              <Panel
+                id="explorer-container"
+                defaultSize={'15%'}
+                minSize={'12%'}
+                maxSize={'20%'}
+              >
+                <ExplorerPanel />
               </Panel>
-              {/* Separator styled via [data-separator] in index.css */}
-              <Separator className="w-0.75 cursor-col-resize" />
+
+              <Separator className="w-0.75 cursor-col-resize bg-border-subtle hover:bg-accent-purple transition-colors" />
             </>
           )}
 
+          {/* Main content */}
           <Panel id="main-content">
             <Group orientation="vertical" className="h-full">
               <Panel id="editor" defaultSize={70} minSize={30}>
@@ -33,8 +42,13 @@ export function MainLayout() {
 
               {isTerminalOpen && (
                 <>
-                  <Separator className="h-0.75 cursor-row-resize" />
-                  <Panel id="terminal" defaultSize={30} minSize={15} maxSize={60}>
+                  <Separator className="h-0.75 cursor-row-resize bg-border-subtle hover:bg-accent-purple transition-colors" />
+                  <Panel
+                    id="terminal"
+                    defaultSize={30}
+                    minSize={15}
+                    maxSize={60}
+                  >
                     <TerminalPanel />
                   </Panel>
                 </>
