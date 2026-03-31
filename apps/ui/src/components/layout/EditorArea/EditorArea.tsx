@@ -1,6 +1,6 @@
-import React from 'react';
 import { Zap, X } from 'lucide-react';
 import { CodeEditor } from '../../editor/CodeEditor';
+import { Breadcrumbs } from '../../editor/Breadcrumbs';
 import { useFileStore } from '../../../store/useFileStore';
 
 export function EditorArea() {
@@ -36,6 +36,9 @@ export function EditorArea() {
           </div>
         ))}
       </div>
+
+      {/* Breadcrumbs */}
+      {activeFile && <Breadcrumbs />}
 
       {/* Editor content */}
       <div className="flex-1 flex flex-col overflow-hidden">

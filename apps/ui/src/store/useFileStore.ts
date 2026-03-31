@@ -1,13 +1,5 @@
 import { create } from 'zustand';
-
-export interface FileNode {
-  id: string;
-  name: string;
-  type: 'file' | 'folder';
-  children?: FileNode[];
-  language?: string;
-  content?: string;
-}
+import { FileNode } from '../types/file';
 
 interface FileState {
   tree: FileNode[];
@@ -168,7 +160,8 @@ export const useFileStore = create<FileState>((set) => ({
       let newActiveId = state.activeTabId;
 
       if (state.activeTabId === id) {
-        newActiveId = newTabs.length > 0 ? newTabs[newTabs.length - 1].id : null;
+        newActiveId =
+          newTabs.length > 0 ? newTabs[newTabs.length - 1].id : null;
       }
 
       return {
@@ -185,13 +178,14 @@ export const useFileStore = create<FileState>((set) => ({
       const updateNode = (nodes: FileNode[]): FileNode[] =>
         nodes.map((node) => {
           if (node.id === id) return { ...node, content };
-          if (node.children) return { ...node, children: updateNode(node.children) };
+          if (node.children)
+            return { ...node, children: updateNode(node.children) };
           return node;
         });
 
       // Update in open tabs
       const updateTabs = state.openTabs.map((tab) =>
-        tab.id === id ? { ...tab, content } : tab
+        tab.id === id ? { ...tab, content } : tab,
       );
 
       return {
