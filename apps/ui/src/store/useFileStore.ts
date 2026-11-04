@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { FileNode } from '../types/file';
 
+export type { FileNode };
+
 interface FileState {
   tree: FileNode[];
   expandedFolders: Set<string>;
@@ -15,121 +17,163 @@ interface FileState {
   updateFileContent: (id: string, content: string) => void;
 }
 
+const API_HANDLER_CONTENT = `import dracul as Cson
+import dayon import as Apt
+import eraquiry, import as Neolai
+import frequiry import as None
+
+class Controllers(api_handler):
+    coloreeadsents = api_handler.py
+
+    def maintrate(nenudfir, ttags):
+        if neo_con.get(overinded({
+            colornt.bata.dtl = &TI[PILYOOT + context.farxsponf])
+            return colorees.bar(seting())
+        )
+
+    def remwist(nesquelf, ttags):
+        if containeaderpath == "tags":
+            return responderoate.getUscesssoult)
+
+    def get_loan(flag):
+        if ari.namepath.getToken():
+            return ari.action.sendHandler(*mepth)
+`;
+
+const SETTINGS_JSON_CONTENT = `{
+  "editor.tabSize": 4,
+  "editor.fontFamily": "Fira Code, monospace",
+  "editor.theme": "dracula-cyberpunk",
+  "collaboration.presence": true,
+  "collaboration.neonGlow": true
+}
+`;
+
+const INDEX_HTML_CONTENT = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeForge — Collaborative IDE</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+`;
+
+const API_HANDLER_NODE: FileNode = {
+  id: 'api_handler.py',
+  name: 'api_handler.py',
+  type: 'file',
+  language: 'python',
+  content: API_HANDLER_CONTENT,
+};
+
+const SETTINGS_JSON_NODE: FileNode = {
+  id: 'settings.json',
+  name: 'settings.json',
+  type: 'file',
+  language: 'json',
+  content: SETTINGS_JSON_CONTENT,
+};
+
+const INDEX_HTML_NODE: FileNode = {
+  id: 'index.html',
+  name: 'index.html',
+  type: 'file',
+  language: 'html',
+  content: INDEX_HTML_CONTENT,
+};
+
 const MOCK_TREE: FileNode[] = [
+  {
+    id: '.gitignore-root',
+    name: '.gitignore',
+    type: 'file',
+    language: 'markdown',
+    content: 'node_modules/\ndist/\n.env\n',
+  },
+  {
+    id: 'public',
+    name: 'public',
+    type: 'folder',
+    children: [
+      {
+        id: 'favicon.ico',
+        name: 'favicon.ico',
+        type: 'file',
+        language: 'markdown',
+        content: '',
+      },
+    ],
+  },
   {
     id: 'root-src',
     name: 'src',
     type: 'folder',
     children: [
       {
-        id: 'App.tsx',
-        name: 'App.tsx',
-        type: 'file',
-        language: 'typescript',
-        content: `import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LoginPage } from './pages/Login';
-import { DashboardPage } from './pages/Dashboard';
-import { EditorPage } from './pages/Editor';
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/editor/:projectId" element={<EditorPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-`,
+        id: 'controllers',
+        name: 'controllers',
+        type: 'folder',
+        children: [
+          API_HANDLER_NODE,
+          {
+            id: 'handler.py',
+            name: 'handler.py',
+            type: 'file',
+            language: 'python',
+            content: '# Generic handler module\n\ndef init():\n    pass\n',
+          },
+          {
+            id: 'settings.py',
+            name: 'settings.py',
+            type: 'file',
+            language: 'python',
+            content: 'DEBUG = True\nPORT = 8080\n',
+          },
+        ],
       },
       {
-        id: 'main.tsx',
-        name: 'main.tsx',
-        type: 'file',
-        language: 'typescript',
-        content: `import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-`,
+        id: 'settings-folder',
+        name: 'settings',
+        type: 'folder',
+        children: [
+          {
+            id: 'config.json',
+            name: 'config.json',
+            type: 'file',
+            language: 'json',
+            content: '{\n  "version": "1.0.0"\n}\n',
+          },
+        ],
       },
-      {
-        id: 'index.css',
-        name: 'index.css',
-        type: 'file',
-        language: 'css',
-        content: `@import "tailwindcss";
-
-@theme {
-  --color-bg-primary: #282a36;
-  --color-accent-purple: #bd93f9;
-}
-`,
-      },
+      INDEX_HTML_NODE,
     ],
   },
+  SETTINGS_JSON_NODE,
   {
-    id: 'root-components',
-    name: 'components',
-    type: 'folder',
-    children: [
-      {
-        id: 'Header.tsx',
-        name: 'Header.tsx',
-        type: 'file',
-        language: 'typescript',
-        content: `export function Header() {
-  return <header>Header</header>;
-}
-`,
-      },
-    ],
+    id: 'package.json',
+    name: 'package.json',
+    type: 'file',
+    language: 'json',
+    content: `{\n  "name": "codeforge",\n  "version": "0.1.0",\n  "private": true\n}\n`,
   },
   {
     id: 'README.md',
     name: 'README.md',
     type: 'file',
     language: 'markdown',
-    content: `# CodeForge ⚡
-A collaborative code editor with a cyberpunk edge.
-
-## Implementation Progress
-- [x] Tailwind v4
-- [x] Lucide Icons
-- [ ] Real-time Sync (WIP)
-`,
-  },
-  {
-    id: 'package.json',
-    name: 'package.json',
-    type: 'file',
-    language: 'json',
-    content: `{
-  "name": "codeforge-ui",
-  "version": "1.0.0",
-  "dependencies": {
-    "react": "^18.3.1",
-    "lucide-react": "^0.395.0"
-  }
-}
-`,
+    content: `# CodeForge ⚡\nA collaborative code editor with a cyberpunk edge.\n`,
   },
 ];
 
 export const useFileStore = create<FileState>((set) => ({
   tree: MOCK_TREE,
-  expandedFolders: new Set(['root-src']),
-  openTabs: [],
-  activeTabId: null,
+  expandedFolders: new Set(['root-src', 'controllers']),
+  openTabs: [API_HANDLER_NODE, SETTINGS_JSON_NODE, INDEX_HTML_NODE],
+  activeTabId: 'api_handler.py',
 
   toggleFolder: (id: string) =>
     set((state) => {
@@ -144,7 +188,6 @@ export const useFileStore = create<FileState>((set) => ({
 
   openFile: (node: FileNode) =>
     set((state) => {
-      // Don't open if already open, just switch
       if (state.openTabs.some((tab) => tab.id === node.id)) {
         return { activeTabId: node.id };
       }
@@ -174,7 +217,6 @@ export const useFileStore = create<FileState>((set) => ({
 
   updateFileContent: (id: string, content: string) =>
     set((state) => {
-      // Update in tree (mock, simplified)
       const updateNode = (nodes: FileNode[]): FileNode[] =>
         nodes.map((node) => {
           if (node.id === id) return { ...node, content };
@@ -183,7 +225,6 @@ export const useFileStore = create<FileState>((set) => ({
           return node;
         });
 
-      // Update in open tabs
       const updateTabs = state.openTabs.map((tab) =>
         tab.id === id ? { ...tab, content } : tab,
       );

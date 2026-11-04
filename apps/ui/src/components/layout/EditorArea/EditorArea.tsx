@@ -45,9 +45,10 @@ export function EditorArea() {
         {activeFile ? (
           <CodeEditor 
             key={activeFile.id}
+            fileId={activeFile.id}
             value={activeFile.content || ''} 
             onChange={(val) => updateFileContent(activeFile.id, val)}
-            language={activeFile.language as 'javascript' | 'typescript' | 'json' | 'markdown' | 'rust' | 'python' | 'go' | 'cpp' | 'html' | 'css'} 
+            language={activeFile.language} 
           />
         ) : (
           <div className="flex-1 flex items-center justify-center">

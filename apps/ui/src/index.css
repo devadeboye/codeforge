@@ -39,6 +39,7 @@
   --shadow-glow-purple: 0 0 8px rgba(189, 147, 249, 0.6), 0 0 20px rgba(189, 147, 249, 0.3);
   --shadow-glow-cyan: 0 0 8px rgba(139, 233, 253, 0.6), 0 0 20px rgba(139, 233, 253, 0.3);
   --shadow-glow-green: 0 0 8px rgba(80, 250, 123, 0.6), 0 0 20px rgba(80, 250, 123, 0.3);
+  --shadow-glow-red: 0 0 8px rgba(255, 85, 85, 0.6), 0 0 20px rgba(255, 85, 85, 0.3);
 }
 
 

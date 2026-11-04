@@ -1,21 +1,34 @@
-import React from 'react';
+import { useMemo } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { dracula } from '@uiw/codemirror-theme-dracula';
-import { javascript } from '@codemirror/lang-javascript';
+import { getLanguageExtension } from './languages';
+import { createRemoteCursorsExtension } from './remoteCursors';
+import { usePresenceStore } from '../../../store/usePresenceStore';
 
 interface CodeEditorProps {
   value: string;
   onChange: (value: string) => void;
-  language?: 'javascript' | 'typescript' | 'json' | 'markdown' | 'rust' | 'python' | 'go' | 'cpp' | 'html' | 'css';
+  language?: string;
+  fileId?: string;
 }
 
-export function CodeEditor({ value, onChange, language = 'javascript' }: CodeEditorProps) {
-  // TODO Map language strings to CodeMirror language extensions
-  // using javascript as a placeholder
-  const extensions = [javascript({ jsx: true, typescript: language === 'typescript' })];
+export function CodeEditor({
+  value,
+  onChange,
+  language = 'javascript',
+  fileId = '',
+}: CodeEditorProps) {
+  const { collaborators } = usePresenceStore();
+
+  const extensions = useMemo(() => {
+    return [
+      getLanguageExtension(language),
+      createRemoteCursorsExtension(collaborators, fileId),
+    ];
+  }, [language, collaborators, fileId]);
 
   return (
-    <div className="w-full h-full overflow-hidden bg-bg-primary">
+    <div className="w-full h-full overflow-hidden bg-bg-primary relative">
       <CodeMirror
         value={value}
         height="100%"

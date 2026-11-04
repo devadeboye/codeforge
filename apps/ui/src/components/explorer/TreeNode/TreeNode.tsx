@@ -65,7 +65,7 @@ export function TreeNode({ node, depth }: TreeNodeProps) {
       {/* Children */}
       {isFolder && isExpanded && node.children && (
         <div className="flex flex-col">
-          {node.children.map(child => (
+          {node.children.map((child: FileNode) => (
             <TreeNode key={child.id} node={child} depth={depth + 1} />
           ))}
         </div>
