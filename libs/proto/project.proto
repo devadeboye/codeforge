@@ -1,0 +1,217 @@
+syntax = "proto3";
+
+package codeforge.project.v1;
+
+import "common.proto";
+
+service ProjectService {
+  // Project CRUD
+  rpc CreateProject(CreateProjectRequest) returns (Project);
+  rpc GetProject(GetProjectRequest) returns (Project);
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse);
+  rpc UpdateProject(UpdateProjectRequest) returns (Project);
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse);
+
+  // File & Folder Operations
+  rpc GetFileTree(GetFileTreeRequest) returns (GetFileTreeResponse);
+  rpc CreateFile(CreateFileRequest) returns (FileMetadata);
+  rpc UpdateFile(UpdateFileRequest) returns (FileMetadata);
+  rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
+  rpc CreateFolder(CreateFolderRequest) returns (FolderMetadata);
+  rpc DeleteFolder(DeleteFolderRequest) returns (DeleteFolderResponse);
+
+  // File Content Snapshots
+  rpc ReadFileContent(ReadFileContentRequest) returns (ReadFileContentResponse);
+  rpc WriteFileContent(WriteFileContentRequest) returns (WriteFileContentResponse);
+
+  // Membership & Permissions
+  rpc InviteMember(InviteMemberRequest) returns (ProjectMember);
+  rpc RemoveMember(RemoveMemberRequest) returns (RemoveMemberResponse);
+  rpc ListMembers(ListMembersRequest) returns (ListMembersResponse);
+}
+
+message Project {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string owner_id = 4;
+  string default_branch = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message CreateProjectRequest {
+  string name = 1;
+  string description = 2;
+  string owner_id = 3;
+}
+
+message GetProjectRequest {
+  string project_id = 1;
+  string user_id = 2;
+}
+
+message ListProjectsRequest {
+  string user_id = 1;
+  optional codeforge.common.v1.PaginationRequest pagination = 2;
+}
+
+message ListProjectsResponse {
+  repeated Project projects = 1;
+  codeforge.common.v1.PaginationResponse pagination = 2;
+}
+
+message UpdateProjectRequest {
+  string project_id = 1;
+  string user_id = 2;
+  optional string name = 3;
+  optional string description = 4;
+}
+
+message DeleteProjectRequest {
+  string project_id = 1;
+  string user_id = 2;
+}
+
+message DeleteProjectResponse {
+  bool success = 1;
+}
+
+message FileMetadata {
+  string id = 1;
+  string project_id = 2;
+  string name = 3;
+  string path = 4;
+  string parent_id = 5;
+  string language = 6;
+  int64 size_bytes = 7;
+  int64 updated_at = 8;
+}
+
+message FolderMetadata {
+  string id = 1;
+  string project_id = 2;
+  string name = 3;
+  string path = 4;
+  string parent_id = 5;
+  int64 updated_at = 6;
+}
+
+message FileTreeNode {
+  string id = 1;
+  string name = 2;
+  string path = 3;
+  string type = 4; // "file" or "folder"
+  string language = 5;
+  repeated FileTreeNode children = 6;
+}
+
+message GetFileTreeRequest {
+  string project_id = 1;
+  string user_id = 2;
+}
+
+message GetFileTreeResponse {
+  repeated FileTreeNode nodes = 1;
+}
+
+message CreateFileRequest {
+  string project_id = 1;
+  string user_id = 2;
+  string name = 3;
+  string parent_id = 4;
+  string language = 5;
+  optional string initial_content = 6;
+}
+
+message UpdateFileRequest {
+  string file_id = 1;
+  string user_id = 2;
+  optional string name = 3;
+  optional string parent_id = 4;
+}
+
+message DeleteFileRequest {
+  string file_id = 1;
+  string user_id = 2;
+}
+
+message DeleteFileResponse {
+  bool success = 1;
+}
+
+message CreateFolderRequest {
+  string project_id = 1;
+  string user_id = 2;
+  string name = 3;
+  string parent_id = 4;
+}
+
+message DeleteFolderRequest {
+  string folder_id = 1;
+  string user_id = 2;
+}
+
+message DeleteFolderResponse {
+  bool success = 1;
+}
+
+message ReadFileContentRequest {
+  string file_id = 1;
+  string user_id = 2;
+}
+
+message ReadFileContentResponse {
+  string file_id = 1;
+  string content = 2;
+  int64 version = 3;
+  int64 updated_at = 4;
+}
+
+message WriteFileContentRequest {
+  string file_id = 1;
+  string user_id = 2;
+  string content = 3;
+  int64 version = 4;
+}
+
+message WriteFileContentResponse {
+  bool success = 1;
+  int64 version = 2;
+  int64 updated_at = 3;
+}
+
+message ProjectMember {
+  string user_id = 1;
+  string project_id = 2;
+  codeforge.common.v1.Role role = 3;
+  int64 joined_at = 4;
+  codeforge.common.v1.UserSummary user = 5;
+}
+
+message InviteMemberRequest {
+  string project_id = 1;
+  string inviter_user_id = 2;
+  string invitee_email = 3;
+  codeforge.common.v1.Role role = 4;
+}
+
+message RemoveMemberRequest {
+  string project_id = 1;
+  string requester_user_id = 2;
+  string target_user_id = 3;
+}
+
+message RemoveMemberResponse {
+  bool success = 1;
+}
+
+message ListMembersRequest {
+  string project_id = 1;
+  string user_id = 2;
+}
+
+message ListMembersResponse {
+  repeated ProjectMember members = 1;
+}
+
