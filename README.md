@@ -33,13 +33,13 @@ Browser (React + Vite)
               --WS----> Execution Service (Code Runner)
 ```
 
-| Service | Stack | Purpose |
-|---------|-------|---------|
-| **API Gateway** | Node.js / Fastify | Thin routing proxy, rate limiting, JWT validation |
-| **User Service** | Node.js / Fastify / Prisma | Auth, JWT, OAuth (GitHub/Google), profiles |
-| **Project Service** | Node.js / Fastify / Prisma | Project/file CRUD, permissions, metadata |
-| **Sync Service** | Node.js / Fastify / WebSocket | Yjs CRDT rooms, presence, event relay |
-| **Execution Service** | Go | Sandboxed Docker container code execution |
+| Service               | Stack                         | Purpose                                           |
+| --------------------- | ----------------------------- | ------------------------------------------------- |
+| **API Gateway**       | Node.js / Fastify             | Thin routing proxy, rate limiting, JWT validation |
+| **User Service**      | Node.js / Fastify / Prisma    | Auth, JWT, OAuth (GitHub/Google), profiles        |
+| **Project Service**   | Node.js / Fastify / Prisma    | Project/file CRUD, permissions, metadata          |
+| **Sync Service**      | Node.js / Fastify / WebSocket | Yjs CRDT rooms, presence, event relay             |
+| **Execution Service** | Go                            | Sandboxed Docker container code execution         |
 
 **Infrastructure:** PostgreSQL, Redis (Pub/Sub), Docker, Kubernetes.
 
@@ -60,7 +60,7 @@ With Next.js, over 90% of components would require the `"use client"` directive.
 
 React + Vite gives us near-instant HMR during development, a leaner bundle with no unused framework overhead, simple static deployment (build to files, serve from a CDN or nginx), and a simpler mental model with no server/client component boundary to reason about.
 
-Knowing when *not* to use Next.js is a stronger engineering signal than defaulting to it for everything.
+Knowing when _not_ to use Next.js is a stronger engineering signal than defaulting to it for everything.
 
 ### Why CodeMirror 6 instead of Monaco Editor?
 
