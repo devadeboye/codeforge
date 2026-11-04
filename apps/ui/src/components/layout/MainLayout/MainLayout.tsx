@@ -9,7 +9,7 @@ export function MainLayout() {
   const { isSidebarOpen, isTerminalOpen } = useUIStore();
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-bg-primary cyber-grid">
       <Header />
 
       <div className="flex flex-1 overflow-hidden">
